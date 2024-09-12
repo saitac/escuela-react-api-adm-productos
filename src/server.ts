@@ -1,16 +1,18 @@
 
 import express, {Express} from "express";
+import colors from "colors"
 import generalRouter from "./routers/general";
 import db from "./config/db";
+import Product from "./models/Product.model";
 
 // Función que conecta a la BD
 const connectDB = async () => {
     try {
         await db.authenticate();
-        console.log("Conexión existosa a la BD");
+        //await Product.sync();
+        console.log(colors.bgGreen.bold("Conexión existosa a la BD"));
     } catch (error) {
-        console.log(error);
-        console.log("Hubo un error al conectar a la BD");
+        console.log(colors.bgRed.white("Hubo un error al conectar a la BD"));
     }
 }
 

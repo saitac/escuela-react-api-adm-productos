@@ -1,6 +1,8 @@
 
 import { server } from "./server";
+import dotenv from "dotenv"
+import colors from "colors"
 
-const puerto: number = 3900;
+dotenv.config();
 
-server.listen(puerto, () => {console.log("Puerto corriendo....")});
+server.listen(process.env.PUERTO, () => {console.log(colors.cyan.bold(`Rest API en el puerto ${process.env.PUERTO}`))});
