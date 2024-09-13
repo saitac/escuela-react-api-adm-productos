@@ -8,9 +8,22 @@ import Product from "./models/Product.model";
 // Función que conecta a la BD
 const connectDB = async () => {
     try {
-        await db.authenticate();
-        //await Product.sync();
-        console.log(colors.bgGreen.bold("Conexión existosa a la BD"));
+        let ok: boolean = true;
+        await db.authenticate().then(
+            async () => {
+                
+                await Product.sync().catch(
+                    () => {
+                        ok = false;
+                        console.log(colors.bgRed.white("Hubo un error al crear la tabla Products"));
+                    }
+                );  
+                  
+            }
+        );
+        
+        if (ok) {console.log(colors.bgGreen.bold("Conexión existosa a la BD"))};
+        
     } catch (error) {
         console.log(colors.bgRed.white("Hubo un error al conectar a la BD"));
     }
