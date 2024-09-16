@@ -11,7 +11,8 @@ const Product = db.define("Product", {
         type: DataTypes.FLOAT
     },
     availability:{
-        type: DataTypes.BOOLEAN
+        type: DataTypes.BOOLEAN,
+        defaultValue: true
     }
 }, {tableName:"Products"});
 

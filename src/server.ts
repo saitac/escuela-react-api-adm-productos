@@ -31,9 +31,14 @@ const connectDB = async () => {
 
 connectDB();
 
+// Crea instancia de servidor express
 const server: Express = express();
 
- // Cargo las rutas de generalRouter
- server.use("/api", generalRouter);
+// Convierte body a objeto JS 
+server.use(express.json());
+
+// Cargo las rutas de generalRouter
+server.use("/api", generalRouter);
+
 
 export {server}
