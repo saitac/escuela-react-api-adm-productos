@@ -1,23 +1,18 @@
 import express , {Router, Request, Response} from "express"
-import { productCreate } from "../controllers/product";
+import { productCreate, productGetById, productsGet, productUpdate } from "../controllers/product";
+import { handleProductGetByIdErrors, handleProductInputErrors } from "../middleware/products";
 
 
 const generalRouter: Router = express.Router();
 
 // ruta de prueba
-generalRouter.get("/", (req: Request, res: Response) => {
-    res.status(200).send("Hola Mundo!, desde GET");
-});
+generalRouter.get("/", productsGet);
 
-/*generalRouter.post("/", (req: Request, res: Response) => {
-    res.status(200).send("Hola Mundo!, desde POST");
-});*/
+generalRouter.get("/:id", handleProductGetByIdErrors, productGetById);
 
-generalRouter.post("/", productCreate);
+generalRouter.post("/", handleProductInputErrors, productCreate);
 
-generalRouter.put("/", (req: Request, res: Response) => {
-    res.status(200).send("Hola Mundo!, desde PUT");
-});
+generalRouter.put("/:id", productUpdate);
 
 
 

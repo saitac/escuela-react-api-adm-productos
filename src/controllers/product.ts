@@ -1,42 +1,25 @@
 
 import {Request, Response} from "express"
 import Product from "../models/Product.model";
-import { check, param, validationResult } from "express-validator"
 
-const productCreate = async (req: Request, res: Response) => {
+
+const productsGet = async (req: Request, res: Response) => {
     try {
 
-        // validacion
-        await check("name")
-            .notEmpty()
-            .withMessage("El nombre del producto no puede ir vacío")
-            .run(req);
+        const products = await Product.findAll();
 
-        await check("price")
-            .notEmpty()
-            .withMessage("El precio del producto no puede ir vacío")
-            .isNumeric().withMessage("El precio del producto debe ser numérico")
-            .isFloat({min: 1}).withMessage("El precio del producto debe ser mayor que cero")
-            .run(req);
+        /*
         
-        const errors = validationResult(req);
-        
-        if (!errors.isEmpty()){
-            return res.status(400).json({
-                status: "error",
-                message: "Parámetros inválidos o faltantes",
-                errors: errors.array()
-            })
-            
-        }
+        const products = await Product.findAll({
+            attributes: {exclude: ["createdAt","updatedAt","availability"]}
+        })
 
-        //const newProduct = await Product.create(params);
+        */
 
         return res.status(200).json({
             status: "ok",
-            message: "Producto creado correctamente",
-            newProduct:""
-        });
+            data: products
+        })
     } catch (error) {
         if ( error instanceof Error) {
             return res.status(400).json({
@@ -47,6 +30,70 @@ const productCreate = async (req: Request, res: Response) => {
     }
 }
 
+const productGetById = async (req: Request, res: Response) => {
+    try {
+
+        const {id}  = req.params;
+        const product = await Product.findByPk(id);
+
+        if (!product){
+            return res.status(404).json({
+                status: "error",
+                message: "Producto no encontrado"
+            });
+        }
+
+        return res.status(200).json({
+            status: "ok",
+            data: product,
+        })
+        
+    } catch (error) {
+        if (error instanceof Error) {
+            return res.status(400).json({
+                status: "error",
+                message: error.message
+            });
+        }
+    }
+}
+
+const productCreate = async (req: Request, res: Response) => {
+    try {
+
+        const newProduct = await Product.create(req.body);
+
+        return res.status(200).json({
+            status: "ok",
+            message: "Producto creado correctamente",
+            newProduct: newProduct
+        });
+    } catch (error) {
+        if ( error instanceof Error) {
+            return res.status(400).json({
+                status: "error",
+                message: error.message
+            });
+        }
+    }
+}
+
+const productUpdate = (req: Request, res: Response) => {
+    try {
+        return res.status(200).json({
+            status: "ok",
+            message: "Desde Update",
+        });
+    } catch (error) {
+        if (error instanceof Error) {
+
+        } return 
+    }
+}
+
 export {
-    productCreate
+    productCreate,
+    productsGet,
+    productGetById,
+    productUpdate
 }

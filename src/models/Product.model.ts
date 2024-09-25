@@ -1,5 +1,4 @@
 
-import { PrimaryKey } from "sequelize-typescript";
 import db from "../config/db";
 import { DataTypes } from "sequelize"
 
