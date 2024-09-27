@@ -50,8 +50,90 @@ const handleProductGetByIdErrors = async (req: Request , res: Response, next: Ne
     next();
 }
 
+const handleProductUpdateErrors = async (req: Request, res: Response, next: NextFunction) => {
+    
+    // validacion
+
+    await param("id")
+    .isInt()
+    .withMessage("ID no válido")
+    .run(req);
+
+    await check("name")
+    .notEmpty()
+    .withMessage("El nombre del producto no puede ir vacío")
+    .run(req);
+
+    await check("price")
+    .notEmpty()
+    .withMessage("El precio del producto no puede ir vacío")
+    .isNumeric().withMessage("El precio del producto debe ser numérico")
+    .isFloat({min: 1}).withMessage("El precio del producto debe ser mayor que cero")
+    .run(req);
+
+    await check("availability")
+    .isBoolean()
+    .withMessage("Valor no válido para disponibilidad")
+    .run(req);
+
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()){
+        return res.status(400).json({
+            status: "error",
+            message: "Parámetros inválidos o faltantes",
+            errors: errors.array()
+        })
+    }
+
+    next();
+}
+
+const handleProductAvailabilityUpdateErrors = async (req: Request, res: Response, next: NextFunction) => {
+    
+    // validacion
+    await param("id")
+    .isInt()
+    .withMessage("ID no válido")
+    .run(req);
+
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()){
+        return res.status(400).json({
+            status: "error",
+            message: "Parámetros inválidos o faltantes",
+            errors: errors.array()
+        })
+    }
+
+    next();
+}
+
+const handleProductDeleteErrors = async (req: Request, res: Response, next: NextFunction) => {
+    // validacion
+    await param("id")
+    .isInt()
+    .withMessage("ID no válido")
+    .run(req);
+
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()){
+        return res.status(400).json({
+            status: "error",
+            message: "Parámetros inválidos o faltantes",
+            errors: errors.array()
+        })
+    }
+
+    next();
+}
 
 export {
     handleProductInputErrors,
-    handleProductGetByIdErrors
+    handleProductGetByIdErrors,
+    handleProductUpdateErrors,
+    handleProductAvailabilityUpdateErrors,
+    handleProductDeleteErrors
 }
