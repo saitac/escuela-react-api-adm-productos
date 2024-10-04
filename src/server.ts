@@ -1,5 +1,5 @@
 
-import express, {Express} from "express";
+import express, {Express, Request, Response} from "express";
 import colors from "colors"
 import generalRouter from "./routers/general";
 import db from "./config/db";
@@ -22,7 +22,7 @@ const connectDB = async () => {
             }
         );
         
-        if (ok) {console.log(colors.bgGreen.bold("Conexión existosa a la BD"))};
+        //if (ok) {console.log(colors.bgGreen.bold("Conexión existosa a la BD"))};
         
     } catch (error) {
         console.log(colors.bgRed.white("Hubo un error al conectar a la BD"));
@@ -38,7 +38,10 @@ const server: Express = express();
 server.use(express.json());
 
 // Cargo las rutas de generalRouter
-server.use("/api", generalRouter);
+server.use("/api/products", generalRouter);
 
+server.get("/api", (req: Request, res: Response) => {
+    res.status(200).json({msg:"Desde"})
+})
 
 export {server}

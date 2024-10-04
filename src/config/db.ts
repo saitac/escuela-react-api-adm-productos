@@ -14,7 +14,7 @@ const db = new Sequelize(<string>process.env.DATABASE_URL,
                 require: false
             }
         },
-        
+        logging: false
     }
 );
 

@@ -4,7 +4,7 @@
   "description": "API REST con Express y TS",
   "main": "index.js",
   "scripts": {
-    "test": "jest",
+    "test": "jest --detectOpenHandles",
     "dev": "nodemon src/index.ts"
   },
   "author": "Salvador Aita Campodonico - SalvaSoft",
