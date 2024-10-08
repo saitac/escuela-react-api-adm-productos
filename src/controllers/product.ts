@@ -63,10 +63,10 @@ const productCreate = async (req: Request, res: Response) => {
 
         const newProduct: IntProduct = await Product.create(req.body);
 
-        return res.status(200).json({
+        return res.status(201).json({
             status: "ok",
             message: "Producto creado correctamente",
-            newProduct: newProduct
+            data: newProduct
         });
     } catch (error) {
         if ( error instanceof Error) {

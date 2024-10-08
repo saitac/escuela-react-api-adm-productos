@@ -6,6 +6,7 @@ describe("GET /api", () => {
         const res = await request(server).get("/api");
         expect(res.status).toBe(200);
         expect(res.headers["content-type"]).toMatch(/json/);
+        expect(res.status).not.toBe(404);
     })
 });
 
