@@ -42,3 +42,27 @@ describe("POST /api/products", () => {
         expect(response.status).not.toBe(404);
     })
 });
+
+describe("GET /api/products", () => {
+    
+    it("Should check if api/products url exists", async () => {
+        const response = await request(server).get("/api/products").send();
+        expect(response.status).not.toBe(404);
+    });
+
+    it("GET a JSON response with products", async () => {
+        const response = await request(server).get("/api/products").send();
+        expect(response.status).toBe(200);
+        expect(response.headers["content-type"]).toMatch("/json");
+        expect(response.body).toHaveProperty("data");
+        expect(response.body).not.toHaveProperty("errors");
+    });
+});
+
+describe("GET /api/products/:id", () => {
+    it("Should return a 404 response for a non-existent product", async () => {
+        const productId = 2000;
+        const response = await request(server).get(`/api/products/${productId}`).send();
+        expect(response.status).toBe(404);
+    });
+})

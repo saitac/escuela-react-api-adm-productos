@@ -44,4 +44,4 @@ server.get("/api", (req: Request, res: Response) => {
     res.status(200).json({msg:"Desde"})
 })
 
-export {server}
+export {server, connectDB}
