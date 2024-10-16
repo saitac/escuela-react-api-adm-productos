@@ -1,6 +1,8 @@
 
-import express, {Express, Request, Response} from "express";
+import express, {Express} from "express";
 import colors from "colors"
+import swaggerUI from "swagger-ui-express";
+import swaggerSpec from "./config/swagger";
 import generalRouter from "./routers/general";
 import db from "./config/db";
 import Product from "./models/Product.model";
@@ -40,8 +42,7 @@ server.use(express.json());
 // Cargo las rutas de generalRouter
 server.use("/api/products", generalRouter);
 
-server.get("/api", (req: Request, res: Response) => {
-    res.status(200).json({msg:"Desde"})
-})
+// Documentación de la API con swagger
+server.use("/api/docs", swaggerUI.serve, swaggerUI.setup(swaggerSpec));
 
 export {server, connectDB}
