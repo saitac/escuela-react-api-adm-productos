@@ -6,8 +6,8 @@ import { handleProductAvailabilityUpdateErrors, handleProductDeleteErrors, handl
 const generalRouter: Router = express.Router();
 
 /**
-*   @swagger
-*       /api/products:
+*  @swagger
+*      /api/products:
 *           get:
 *               summary: Devuelve todos los productos.
 *               description: Devuelve todos los productos en un onjeto JSON dentro de un arreglo.
@@ -18,35 +18,36 @@ const generalRouter: Router = express.Router();
 *               responses:
 *                   200:
 *                       description: Solicitud exitosa
-*                       content:
-*                           schema:
-*                               type: object
-*                               properties:
-*                                   status:
-*                                       type: string
-*                                       example: Ok
-*                                   data:
-*                                       type: array
-*                                           items:
-*                                               type: object
-*                                               properties:
-*                                                   id:
-*                                                       type: integer
-*                                                       example: 1
-*                                                   name:
-*                                                       type: string
-*                                                       description: Nombre del producto
-*                                                       example: Monitor Curvo 34 Pulgadas
-*                                                   price:
-*                                                       type: number
-*                                                       description: Precio del producto
-*                                                       example: 300
-*                                                   availability:
-*                                                       type: boolean
-*                                                       description: Disponibilidad del producto
-*                                                       example: true
+*                       schema:
+*                           type: object
+*                           properties:
+*                               status:
+*                                   type: string
+*                                   example: Ok
+*                               data:
+*                                   type: array
+*                                   items:
+*                                       type: object
+*                                       properties:
+*                                           id:
+*                                               type: integer
+*                                               description: Id del producto
+*                                               example: 1
+*                                           name:
+*                                               type: string
+*                                               description: Nombre del producto
+*                                               example: Monitor Curvo 34 Pulgadas
+*                                           price:
+*                                               type: number
+*                                               description: Precio del producto
+*                                               example: 300
+*                                           availability:
+*                                               type: boolean
+*                                               description: Disponibilidad del producto
+*                                               example: true
 */
 
+generalRouter.get("/", productsGet);
 
 /**
 *   @swagger
@@ -59,11 +60,13 @@ const generalRouter: Router = express.Router();
 *               produces:
 *                   - application/json
 *               parameters:
-*                   - name: id
+*                   - in: path
+*                     name: id
 *                     description: Id del producto
 *                     required: true
-*                     type: integer
-*                     example: 1
+*                     schema:
+*                       type: integer
+*                       example: 1
 *               responses:
 *                   200:
 *                       description: Solicitud exitosa
@@ -92,13 +95,36 @@ const generalRouter: Router = express.Router();
 *                                           type: boolean
 *                                           description: Disponibilidad del producto
 *                                           example: true
+*                   404:
+*                       description: Recurso no existe
+*                   400:
+*                       description: Solicitud erronea - Id Inválido
 */
 
-
-// ruta de prueba
-generalRouter.get("/", productsGet);
-
 generalRouter.get("/:id", handleProductGetByIdErrors, productGetById);
+
+/**
+ *  @swagger
+ *      /api/products:
+ *          post:
+ *              summary: Crea un producto.
+ *              description: Crea un prodcuto en la BD según el JSON enviado y devuelve un JSON con los datos.
+ *              tags:
+ *                  - Products
+ *              requestBody:
+ *                  required: true
+ *                  content:
+ *                      application/json:
+ *                          schema:
+ *                              type: object
+ *                              properties:
+ *                                  name:
+ *                                      type: string
+ *                                      example: "Monitor Curvo 49"
+ * 
+ * 
+ * 
+ */
 
 generalRouter.post("/", handleProductInputErrors, productCreate);
 

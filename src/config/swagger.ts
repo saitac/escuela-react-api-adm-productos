@@ -1,7 +1,7 @@
 import swaggerJSDoc from "swagger-jsdoc";
 
 const options: swaggerJSDoc.Options = {
-    openapi: "6.2.8",
+    openapi: "3.0.2",
     swaggerDefinition:{
         info:{
             version:"1.0.0",
