@@ -1,8 +1,8 @@
 import swaggerJSDoc from "swagger-jsdoc";
 
 const options: swaggerJSDoc.Options = {
-    openapi: "3.0.2",
-    swaggerDefinition:{
+    definition:{
+        openapi: "3.0.0",
         info:{
             version:"1.0.0",
             title:"REST API Node.js / Express / TypeScript",

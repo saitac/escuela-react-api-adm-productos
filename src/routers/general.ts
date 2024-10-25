@@ -103,6 +103,7 @@ generalRouter.get("/", productsGet);
 
 generalRouter.get("/:id", handleProductGetByIdErrors, productGetById);
 
+
 /**
  *  @swagger
  *      /api/products:
