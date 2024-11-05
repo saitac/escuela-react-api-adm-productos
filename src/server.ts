@@ -2,6 +2,7 @@
 import express, {Express} from "express";
 import cors, {CorsOptions} from "cors"
 import colors from "colors"
+import morgan from "morgan"
 import swaggerUI from "swagger-ui-express";
 import swaggerSpec, { swaggerUIOptions } from "./config/swagger";
 import generalRouter from "./routers/general";
@@ -50,6 +51,9 @@ const corsOptions: CorsOptions = {
     } // ¿quién me está enviando la petición?, debería ser la app cliente
 }
 server.use(cors(corsOptions));
+
+// Morgan
+server.use(morgan("dev"));
 
 // Convierte body a objeto JS 
 server.use(express.json());
