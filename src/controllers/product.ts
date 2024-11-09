@@ -6,7 +6,9 @@ import { IntProduct } from "../interfaces/interfaces";
 const productsGet = async (req: Request, res: Response) => {
     try {
 
-        const products: IntProduct[] = await Product.findAll();
+        const products: IntProduct[] = await Product.findAll({
+            order:[['id','DESC']]
+        });
 
         /*
         
