@@ -7,6 +7,7 @@
     "test": "jest --detectOpenHandles",
     "test:coverage": "npm run pretest && jest --detectOpenHandles --coverage",
     "dev": "nodemon src/index.ts",
+    "build": "tsc",
     "pretest": "ts-node ./src/data --clear"
   },
   "author": "Salvador Aita Campodonico - SalvaSoft",
